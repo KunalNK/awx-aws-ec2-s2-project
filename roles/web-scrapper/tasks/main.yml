@@ -1,0 +1,57 @@
+- name: Install python3 & git package
+        yum:
+          name:
+            - python3
+            - git
+          state: present
+          
+      - name: Install prequisites
+        git:
+         repo: 'https://github.com/KunalNK/web_scrap_preq.git'
+         dest: /home/ec2-user/web_scrap_preq
+         update: no
+         
+      - name: Run the bash script command
+        shell: bash /home/ec2-user/web_scrap_preq/preq.sh
+
+      - name: Clone github repository
+        git:
+         repo: 'https://github.com/KunalNK/my_weather_scraper.git'
+         dest: /home/ec2-user/myscraper_project
+         update: no
+
+- name: Install requests & beautifulsoup using pip3
+  pip:
+    name:
+      - requests
+      - beautifulsoup4
+    executable: pip3
+
+- name: Run the script command
+  shell: python3 /home/ec2-user/myscraper_project/weather.py
+
+- name: Create an empty bucket
+  aws_s3:
+    bucket: mybucketkk07
+    mode: create
+    permission: public-read-write    
+    
+- name: Put file into newly creates S3 bucket
+  aws_s3:
+    bucket: mybucketkk07
+    object: weather.csv
+    src: /home/ec2-user/weather.csv
+    mode: put
+    permission: public-read
+    
+    
+- name: Get the url of the object
+  aws_s3:
+    bucket: mybucketkk07
+    object: weather.csv
+    expiration: 10800
+    mode: geturl
+  register: geturl_result
+
+- name: Print object url
+  debug: var=geturl_result
