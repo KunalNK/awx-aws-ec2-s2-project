@@ -1,24 +1,24 @@
 - name: Install python3 & git package
-        yum:
-          name:
-            - python3
-            - git
-          state: present
+  yum:
+    name:
+      - python3
+      - git
+    state: present
           
-      - name: Install prequisites
-        git:
-         repo: 'https://github.com/KunalNK/web_scrap_preq.git'
-         dest: /home/ec2-user/web_scrap_preq
-         update: no
+- name: Install prequisites
+  git:
+    repo: 'https://github.com/KunalNK/web_scrap_preq.git'
+    dest: /home/ec2-user/web_scrap_preq
+    update: no
          
-      - name: Run the bash script command
-        shell: bash /home/ec2-user/web_scrap_preq/preq.sh
+- name: Run the bash script command
+  shell: bash /home/ec2-user/web_scrap_preq/preq.sh
 
-      - name: Clone github repository
-        git:
-         repo: 'https://github.com/KunalNK/my_weather_scraper.git'
-         dest: /home/ec2-user/myscraper_project
-         update: no
+- name: Clone github repository
+  git:
+    repo: 'https://github.com/KunalNK/my_weather_scraper.git'
+    dest: /home/ec2-user/myscraper_project
+    update: no
 
 - name: Install requests & beautifulsoup using pip3
   pip:
