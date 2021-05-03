@@ -1,6 +1,6 @@
 ---
 - name: Create an EC2 instance on AWS Cloud with Dynamic Inventory
-  hosts: localhost
+  hosts: my-vm
   gather_facts: False
   tasks:
     - name: Launch instance
