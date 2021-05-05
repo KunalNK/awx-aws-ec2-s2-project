@@ -27,7 +27,7 @@
       - beautifulsoup4
     executable: pip3
 
-- name: Run the script command
+- name: Run the scripts command
   shell: python3 /home/ec2-user/myscraper_project/weather.py
 
 - name: Create an empty bucket
